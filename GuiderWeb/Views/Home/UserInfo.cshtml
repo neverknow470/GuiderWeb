@@ -1,0 +1,292 @@
+﻿@{
+    ViewBag.Title = "各項數值查詢";
+}
+<!--Load the AJAX API-->
+<link rel="stylesheet" href="~/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css" />
+
+<form method="get">
+    <div class="jumbotron">
+        <div class="row">
+            <input type="hidden" name="CARDID" class="form-control" placeholder="輸入卡號或身分證字號" value="@ViewBag.CARDID" />
+            <div class="col-md-1">日期:</div>
+            <div class="col-md-2">
+                <div class="input-group date" data-provide="datepicker" id="datepickers">
+                    <input id="SDATE" name="SDATE" type="text" class="form-control" value="@ViewBag.SDATE" autocomplete="off">
+                    <div class="input-group-addon" style="display:none;">
+                        <span class="glyphicon glyphicon-th"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1" style="font-size:16px;">～</div>
+            <div class="col-md-2">
+                <div class="input-group date" data-provide="datepicker" id="datepickere">
+                    <input id="EDATE" name="EDATE" type="text" class="form-control" value="@ViewBag.EDATE" autocomplete="off">
+                    <div class="input-group-addon" style="display:none;">
+                        <span class="glyphicon glyphicon-th"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <button type="submit" class="btn btn-default">查詢</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table" style="width: 100%;">
+                <tr>
+                    <td>姓名：</td>
+                    <td>
+                        @ViewBag.USERINFO.USERNAME
+                    </td>
+                    <td>身分證字號：</td>
+                    <td>
+                        @ViewBag.USERINFO.ID
+                    </td>
+                </tr>
+                <tr>
+                    <td>生日：</td>
+                    <td>
+                        @ViewBag.USERINFO.BIRTHDAY
+                    </td>
+                    <td>性別：</td>
+                    <td>
+                        @ViewBag.USERINFO.GENDER
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row"><h3>基本</h3></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>量測時間</th>
+                                <th>身高</th>
+                                <th>體重</th>
+                                <th>BMI</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in ViewBag.BASICINFO)
+                            {
+                                <tr>
+                                    <td>@item.CDATE</td>
+                                    <td>@item.HEIGHT</td>
+                                    <td>@item.WEIGHT</td>
+                                    <td>@item.BMI</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row"><h3></h3></div>
+            <div class="row">
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div id="chart_divBI"></div>
+        </div>
+        <div class="col-md-6">
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row"><h3>血壓</h3></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>量測時間</th>
+                                <th>舒張壓</th>
+                                <th>收縮壓</th>
+                                <th>心跳</th>
+                                @*<th>脈搏</th>*@
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in ViewBag.BLOODPRESSURE)
+                            {
+                                <tr>
+                                    <td>@item.CDATE</td>
+                                    <td>@item.DBP</td>
+                                    <td>@item.SBP</td>
+                                    <td>@item.HB</td>
+                                    @*<td>@item.PU</td>*@
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row"><h3>血糖</h3></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>量測時間</th>
+                                <th>血糖</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in ViewBag.BLOODSUGAR)
+                            {
+                                <tr>
+                                    <td>@item.CDATE</td>
+                                    <td>@item.BS</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div id="chart_divBP"></div>
+        </div>
+        <div class="col-md-6">
+            <div id="chart_divBS"></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row"><h3>體溫</h3></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>量測時間</th>
+                                <th>體溫</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in ViewBag.BODYTEMP)
+                            {
+                                <tr>
+                                    <td>@item.CDATE</td>
+                                    <td>@item.BT</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row"><h3>血氧</h3></div>
+            <div class="row">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>量測時間</th>
+                            <th>血氧</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.BLOODOXYGEN)
+                        {
+                            <tr>
+                                <td>@item.CDATE</td>
+                                <td>@item.BO</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div id="chart_divBT"></div>
+        </div>
+        <div class="col-md-6">
+            <div id="chart_divBO"></div>
+        </div>
+    </div>
+</form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script src="~/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script src="~/bootstrap-datepicker/js/locales/bootstrap-datepicker.en-CA.js"></script>
+<script type="text/javascript">
+    $('#datepickers').datepicker({
+        format: "yyyy-mm-dd",
+        autoclose: true
+    })
+    $('#datepickere').datepicker({
+        format: "yyyy-mm-dd",
+        autoclose: true
+    })
+
+    google.load('visualization', '1.0', { 'packages': ['corechart'] });
+    google.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', '舒張壓');
+        data.addColumn('number', '收縮壓');
+        data.addColumn('number', '心跳');
+        //data.addColumn('number', '脈搏');
+        data.addRows([@MvcHtmlString.Create(ViewBag.strBP)]);
+        var options = { title: '血壓', curveType: 'function', 'width': 600, 'height': 400, hAxis: { title: '日期時間' }, vAxis: { title: 'mmHg' }};
+        var chart = new google.visualization.LineChart(document.getElementById('chart_divBP'));
+        chart.draw(data, options);
+
+        data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', '血糖');
+        data.addRows([@MvcHtmlString.Create(ViewBag.strBS)]);
+        options = { title: '血糖', curveType: 'function', 'width': 600, 'height': 400, hAxis: { title: '日期時間' }, vAxis: { title: 'mg/dL' }};
+        chart = new google.visualization.LineChart(document.getElementById('chart_divBS'));
+        chart.draw(data, options);
+
+        data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', '體溫');
+        data.addRows([@MvcHtmlString.Create(ViewBag.strBT)]);
+        options = { title: '體溫', curveType: 'function', 'width': 600, 'height': 400, hAxis: { title: '日期時間' }, vAxis: { title: '℃' }};
+        chart = new google.visualization.LineChart(document.getElementById('chart_divBT'));
+        chart.draw(data, options);
+
+        data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', '血氧');
+        data.addRows([@MvcHtmlString.Create(ViewBag.strBO)]);
+        options = { title: '血氧', curveType: 'function', 'width': 600, 'height': 400, hAxis: { title: '日期時間' }, vAxis: { title: '%' }};
+        chart = new google.visualization.LineChart(document.getElementById('chart_divBO'));
+        chart.draw(data, options);
+
+        data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', '身高');
+        data.addColumn('number', '體重');
+        data.addColumn('number', 'BMI');
+        data.addRows([@MvcHtmlString.Create(ViewBag.strBI)]);
+        options = { title: '基本', curveType: 'function', 'width': 600, 'height': 400, hAxis: { title: '日期時間' }, vAxis: { title: '%' }};
+        chart = new google.visualization.LineChart(document.getElementById('chart_divBI'));
+        chart.draw(data, options);
+    }
+</script>

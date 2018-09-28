@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "使用者列表";
+}
+<form method="post">
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-md-3">
+                <input name="CARDID" class="form-control" placeholder="輸入卡號或身分證字號" value="@ViewBag.CARDID" />
+            </div>
+            <div class="col-md-1">
+                <button type="submit" class="btn btn-default" name="TYPE" value="Search">查詢</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="row">
+            @Html.ActionLink("新增", "NewUser", "Home", new { area = "" }, new { @class = "btn btn-default" })
+            <button type="submit" class="btn btn-default" name="TYPE" value="Update">更新</button>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>卡號</th>
+                            <th>姓名</th>
+                            <th>身分證字號</th>
+                            <th>生日</th>
+                            <th>性別</th>
+                            <th>權限等級</th>
+                            <th>區域</th>
+                            <th>啟用</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.USERINFO)
+                        {
+                            <tr>
+                                <td>
+                                    @item.USERID
+                                    <input type="hidden" name="SID" value="@item.ID" />
+                                </td>
+                                <td>@item.USERNAME</td>
+                                <td>@item.ID</td>
+                                <td>@item.BIRTHDAY</td>
+                                <td>@item.GENDER</td>
+                                <td>@Html.DropDownList("LEVEL", (SelectList)item.LEVEL)</td>
+                                <td>@Html.DropDownList("AREAID", (SelectList)item.AREAID)</td>
+                                <td>@Html.DropDownList("STATUS", (SelectList)item.STATUS)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    function opena(CARDID) {
+        window.open("Home/UserInfo?CARDID=" + CARDID + "&SDATE=&EDATE=", "_self");
+    }
+</script>

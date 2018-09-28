@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "帳號管理";
+}
+
+<form method="post">
+    <div class="jumbotron"></div>
+    <div class="row">
+        <div class="col-md-1">帳號:</div>
+        <div class="col-md-3">
+            <input name="ID" class="form-control" placeholder="帳號" /><br />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1">密碼:</div>
+        <div class="col-md-3">
+            <input name="PASSWORD" class="form-control" placeholder="密碼" /><br />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1">姓名:</div>
+        <div class="col-md-3">
+            <input name="USERNAME" class="form-control" placeholder="姓名" /><br />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1">性別:</div>
+        <div class="col-md-3">
+            <select name="GENDER" class="dropdown">
+                <option value="M">男</option>
+                <option value="F">女</option>
+            </select><br /><br />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1">權限:</div>
+        <div class="col-md-3">
+            <select name="LEVEL" class="dropdown">
+                <option value="1">一般使用者</option>
+                <option value="6">區域管理者</option>
+                <option value="9">超級管理者</option>
+            </select><br /><br />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1">區域:</div>
+        <div class="col-md-3">
+            @Html.DropDownList("AREAID", (SelectList)ViewBag.AREALIST)
+            <br /><br />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1">
+            <button name="TYPE" value="SAVE" type="submit" class="btn btn-default">新增</button>
+            @Html.ActionLink("回上一頁", "UserSetting", "Home", new { area = "" }, new { @class = "btn btn-default" })
+        </div>
+    </div>
+    @if (TempData["message"] != null)
+    {
+        <script type="text/javascript">
+            var message = @Html.Raw(Json.Encode(TempData["message"]));
+            alert(message);
+        </script>
+    }
+</form>

@@ -1,0 +1,12 @@
+﻿@{
+    string ActionName = Convert.ToString(HttpContext.Current.Request.RequestContext.RouteData.Values["Action"]);
+    if (ActionName == "Index") { Layout = null; }
+    else
+    {
+        if (Session["USERID"] == null || string.IsNullOrWhiteSpace(Session["USERID"].ToString()))
+        {
+            Response.Redirect("~/Home/Index");
+        }
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}

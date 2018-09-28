@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "卡片歸戶";
+}
+
+<form method="post">
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-md-3">
+                <input name="CARDID" class="form-control" placeholder="輸入卡號" />
+            </div>
+            <div class="col-md-1">
+                <button type="submit" class="btn btn-default">歸戶</button>
+            </div>
+        </div>
+    </div>
+    @if (TempData["message"] != null)
+    {
+        <script type="text/javascript">
+            var message = @Html.Raw(Json.Encode(TempData["message"]));
+            alert(message);
+        </script>
+    }
+</form>
