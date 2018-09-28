@@ -6,12 +6,21 @@
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/css/bootstrap.css" rel="stylesheet" />
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-brand">
-                @Html.ActionLink("首頁", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("使用者列表", "UserList", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("歸戶", "CardBelong", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @{ 
+                    if (Session["LEVEL"].ToString() == "9")
+                    {
+                        @Html.ActionLink("帳戶設定", "UserSetting", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    }
+                }
+                @Html.ActionLink("登出", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
         </div>
     </div>

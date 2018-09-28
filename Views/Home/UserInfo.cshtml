@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="col-md-1">
-                <button type="submit" class="form-control" value="查詢">查詢</button>
+                <button type="submit" class="btn btn-default">查詢</button>
             </div>
         </div>
     </div>
@@ -58,6 +58,52 @@
             </table>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row"><h3>基本</h3></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>量測時間</th>
+                                <th>身高</th>
+                                <th>體重</th>
+                                <th>BMI</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in ViewBag.BASICINFO)
+                            {
+                                <tr>
+                                    <td>@item.CDATE</td>
+                                    <td>@item.HEIGHT</td>
+                                    <td>@item.WEIGHT</td>
+                                    <td>@item.BMI</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row"><h3></h3></div>
+            <div class="row">
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div id="chart_divBI"></div>
+        </div>
+        <div class="col-md-6">
+
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-md-6">
             <div class="row"><h3>血壓</h3></div>
@@ -70,7 +116,7 @@
                                 <th>舒張壓</th>
                                 <th>收縮壓</th>
                                 <th>心跳</th>
-                                <th>脈搏</th>
+                                @*<th>脈搏</th>*@
                             </tr>
                         </thead>
                         <tbody>
@@ -81,7 +127,7 @@
                                     <td>@item.DBP</td>
                                     <td>@item.SBP</td>
                                     <td>@item.HB</td>
-                                    <td>@item.PU</td>
+                                    @*<td>@item.PU</td>*@
                                 </tr>
                             }
                         </tbody>
@@ -203,7 +249,7 @@
         data.addColumn('number', '舒張壓');
         data.addColumn('number', '收縮壓');
         data.addColumn('number', '心跳');
-        data.addColumn('number', '脈搏');
+        //data.addColumn('number', '脈搏');
         data.addRows([@MvcHtmlString.Create(ViewBag.strBP)]);
         var options = { title: '血壓', curveType: 'function', 'width': 600, 'height': 400, hAxis: { title: '日期時間' }, vAxis: { title: 'mmHg' }};
         var chart = new google.visualization.LineChart(document.getElementById('chart_divBP'));
@@ -231,6 +277,16 @@
         data.addRows([@MvcHtmlString.Create(ViewBag.strBO)]);
         options = { title: '血氧', curveType: 'function', 'width': 600, 'height': 400, hAxis: { title: '日期時間' }, vAxis: { title: '%' }};
         chart = new google.visualization.LineChart(document.getElementById('chart_divBO'));
+        chart.draw(data, options);
+
+        data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', '身高');
+        data.addColumn('number', '體重');
+        data.addColumn('number', 'BMI');
+        data.addRows([@MvcHtmlString.Create(ViewBag.strBI)]);
+        options = { title: '基本', curveType: 'function', 'width': 600, 'height': 400, hAxis: { title: '日期時間' }, vAxis: { title: '%' }};
+        chart = new google.visualization.LineChart(document.getElementById('chart_divBI'));
         chart.draw(data, options);
     }
 </script>

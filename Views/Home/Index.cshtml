@@ -8,34 +8,46 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <script type="text/javascript">
-        var message = @TempData["alert"] != null ? TempData["alert"].ToString() : "";
-        if (message != "") alert(message);
-    </script>
     <form method="post">
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
-            <div class="row">
-                <div class="col-md-12">
-                    <input class="form-control" type="text" placeholder="身分證字號" name="ACCOUNT" />
-                </div>
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <h2>健康管理資訊系統</h2><br />
             </div>
-            <br />
-            <div class="row">
-                <div class="col-md-12">
-                    <input class="form-control" type="text" placeholder="密碼" name="PASSWORD" />
-                </div>
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-md-3">
-                    <button class="form-control" type="submit">登入</button>
-                </div>
-            </div>
+            <div class="col-md-4"></div>
         </div>
-        <div class="col-md-4"></div>
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <input class="form-control" type="text" placeholder="身分證字號" name="ACCOUNT" />
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-12">
+                        <input class="form-control" type="password" placeholder="密碼" name="PASSWORD" />
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-3">
+                        <button class="btn btn-default" type="submit">登入</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
     </form>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @if (TempData["message"] != null)
+    {
+        <script type="text/javascript">
+            var message = @Html.Raw(Json.Encode(TempData["message"]));
+            alert(message);
+        </script>
+    }
 </body>
 </html>
